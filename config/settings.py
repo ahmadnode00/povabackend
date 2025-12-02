@@ -5,6 +5,8 @@ Django settings for config project.
 from pathlib import Path
 import os
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-development-key-change-in-production'
@@ -34,6 +36,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -57,11 +60,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.config(default="sqlite:///db.sqlite3")
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -89,6 +90,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
+
 # REST Framework settings
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -105,11 +109,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
      # React dev server
+    
+    
     "http://127.0.0.1:3000",
-    "http://localhost:5173",  # Vite default (if needed)
-    "http://127.0.0.1:5173",
-    "http://localhost:3001",
-    "http://127.0.0.1:3001",
+   "https://povalogistics-com.vercel.app",
+   "https://trackingpage.vercel.app"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
