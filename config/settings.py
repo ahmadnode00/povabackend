@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',  # Enable CORS
-    'api',  # Your API app
+    'api',          # Your API app
 ]
 
 # ========================
@@ -81,10 +81,10 @@ DATABASES = {
 # Password Validators
 # ========================
 AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 # ========================
@@ -121,8 +121,9 @@ REST_FRAMEWORK = {
 # ========================
 CORS_ALLOW_ALL_ORIGINS = False  # Production: allow only whitelisted origins
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:3000",  # Local dev
-    "https://povalogistics-com.vercel.app",  # Your Vercel React frontend
-    "https://trackingpage.vercel.app",  # Any other frontend URL
+    "http://127.0.0.1:3000",                       # Local dev
+    "https://povalogistics-com.vercel.app",        # Your Vercel React frontend
+    "https://trackingpage.vercel.app",            # Any other frontend URL
 ]
+
 CORS_ALLOW_CREDENTIALS = True
