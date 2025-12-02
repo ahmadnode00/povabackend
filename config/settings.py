@@ -4,17 +4,24 @@ Django settings for config project.
 
 from pathlib import Path
 import os
-
 import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-development-key-change-in-production'
+# ========================
+# SECRET_KEY & DEBUG from ENV
+# ========================
+SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-secret-key-for-dev')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-DEBUG = True
+# ========================
+# ALLOWED_HOSTS
+# ========================
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
-ALLOWED_HOSTS = ['*', 'localhost', '127.0.0.1']
-
+# ========================
+# Installed Apps
+# ========================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -27,16 +34,18 @@ INSTALLED_APPS = [
     'api',  # Your API app
 ]
 
+# ========================
+# Middleware
+# ========================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',  # CORS middleware - must be very early
+    'corsheaders.middleware.CorsMiddleware',  # Must be very early
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -59,41 +68,45 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
+# ========================
+# Database
+# ========================
 DATABASES = {
-    "default": dj_database_url.config(default="sqlite:///db.sqlite3")
+    "default": dj_database_url.config(
+        default=os.environ.get("DATABASE_URL", "sqlite:///db.sqlite3")
+    )
 }
 
-
+# ========================
+# Password Validators
+# ========================
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
+# ========================
+# Internationalization
+# ========================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# ========================
+# Static & Media Files
+# ========================
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-
-# REST Framework settings
+# ========================
+# REST Framework
+# ========================
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 50,
@@ -103,17 +116,13 @@ REST_FRAMEWORK = {
     ],
 }
 
-# CORS settings - Allow frontend to access backend
-# Temporary: Allow all origins for development testing
-CORS_ALLOW_ALL_ORIGINS = True
-
+# ========================
+# CORS Settings
+# ========================
+CORS_ALLOW_ALL_ORIGINS = False  # Production: allow only whitelisted origins
 CORS_ALLOWED_ORIGINS = [
-     # React dev server
-    
-    
-    "http://127.0.0.1:3000",
-   "https://povalogistics-com.vercel.app",
-   "https://trackingpage.vercel.app"
+    "http://127.0.0.1:3000",  # Local dev
+    "https://povalogistics-com.vercel.app",  # Your Vercel React frontend
+    "https://trackingpage.vercel.app",  # Any other frontend URL
 ]
-
 CORS_ALLOW_CREDENTIALS = True
