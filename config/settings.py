@@ -123,7 +123,8 @@ CORS_ALLOW_ALL_ORIGINS = False  # Production: allow only whitelisted origins
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:3000",                       # Local dev
     "https://povalogistics-com.vercel.app",        # Your Vercel React frontend
-    "https://trackingpage.vercel.app",            # Any other frontend URL
+    "https://trackingpage.vercel.app",  
+    "povabackendserver.onrender.com"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
